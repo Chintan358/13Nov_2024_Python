@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+
+        function highlight() {
+
+            var h1 = document.getElementsByTagName("h1")[0]
+            var h2 = document.getElementsByTagName("h1")[1]
+
+
+            h1.style.color = "white"
+            h1.style.backgroundColor = "black"
+
+            h2.style.color = "red"
+            h2.style.backgroundColor = "green"
+
+        }
+
+        function highlight1() {
+
+            var h1 = document.getElementsByTagName("h1")[0]
+            var h2 = document.getElementsByTagName("h1")[1]
+
+            h2.style.color = "white"
+            h2.style.backgroundColor = "black"
+
+            h1.style.color = "red"
+            h1.style.backgroundColor = "green"
+        }
+
+
+
+        function textbox() {
+
+            var uname = document.getElementById("uname")
+            uname.style.width = "170px"
+            uname.style.height = "25px"
+            uname.style.border = "1px solid red"
+        }
+
+        function textbox_1() {
+
+            var uname = document.getElementById("uname")
+            uname.style.width = "150px"
+            uname.style.height = "20px"
+        }
+
+        function add() {
+            var a = document.getElementById("a").value
+            var b = document.getElementById("b").value
+            var r = document.getElementById("r")
+            var c = Number(a) + Number(b)
+            r.innerHTML = c
+        }
+
+        function sub() {
+            var a = document.getElementById("a").value
+            var b = document.getElementById("b").value
+            var r = document.getElementById("r")
+            var c = Number(a) - Number(b)
+            r.innerHTML = c
+        }
+
+        function mul() {
+            var a = document.getElementById("a").value
+            var b = document.getElementById("b").value
+            var r = document.getElementById("r")
+            var c = Number(a) * Number(b)
+            r.innerHTML = c
+        }
+
+        function div() {
+            var a = document.getElementById("a").value
+            var b = document.getElementById("b").value
+            var r = document.getElementById("r")
+            var c = Number(a) / Number(b)
+            r.innerHTML = c
+        }
+
+    </script>
+</head>
+
+<body>
+
+
+    <h1 onmouseover="highlight()">Tops technologies</h1>
+    <h1 onmouseover="highlight1()">Hello , JS</h1>
+
+    <input type="text" id="uname" style="width: 150px; height: 20px;" onclick="textbox()" onblur="textbox_1()">
+    <hr>
+
+    <input type="text" id="a" placeholder="Enter number">
+    <input type="text" id="b" placeholder="Enter number">
+    <span id="r"></span>
+
+    <br><br>
+
+    <button onmouseover="add()">Add</button>
+    <button onmouseover="sub()">Sub</button>
+    <button onmouseover="mul()">Mul
+    </button>
+    <button onmouseover="div()">Div</button>
+
+</body>
+
+</html>
