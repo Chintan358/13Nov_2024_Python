@@ -1,0 +1,19 @@
+Djano : 
+
+create env : 
+py -m venv <envname>
+
+<envname>/Scripts/activate
+
+install django : 
+pip install django
+
+create project : 
+py -m django startproject <projecname>
+
+create app : 
+switch to project
+py manage.py stattapp <appname>
+
+runserver : 
+py manage.py runserver
