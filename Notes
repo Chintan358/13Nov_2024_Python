@@ -17,3 +17,12 @@ py manage.py stattapp <appname>
 
 runserver : 
 py manage.py runserver
+
+setup HTML : 
+
+setting.py => Templates => Dir {BASE_DIR/"folder name"}
+
+Create model : 
+py manage.py Makemigrations
+py manage.py Migrate
+py manage.py  createsuperuser
