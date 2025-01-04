@@ -1,28 +1,83 @@
-Djano : 
+# Djano : 
 
-create env : 
-py -m venv <envname>
+# create env : 
+# py -m venv <envname>
 
-<envname>/Scripts/activate
+# <envname>/Scripts/activate
 
-install django : 
-pip install django
+# install django : 
+# pip install django
 
-create project : 
-py -m django startproject <projecname>
+# create project : 
+# py -m django startproject <projecname>
 
-create app : 
-switch to project
-py manage.py stattapp <appname>
+# create app : 
+# switch to project
+# py manage.py stattapp <appname>
 
-runserver : 
-py manage.py runserver
+# runserver : 
+# py manage.py runserver
 
-setup HTML : 
+# setup HTML : 
 
-setting.py => Templates => Dir {BASE_DIR/"folder name"}
+# setting.py => Templates => Dir {BASE_DIR/"folder name"}
 
-Create model : 
-py manage.py Makemigrations
-py manage.py Migrate
-py manage.py  createsuperuser
+# Create model : 
+# py manage.py Makemigrations
+# py manage.py Migrate
+# py manage.py  createsuperuser
+
+
+# Django Model query : 
+# Create model
+# import model
+# Ex : Student [username,email,phone,age]
+# save data : 
+
+# s = Student(username="Test",email="test@gmail.com",age=25,phone="8989898989")
+# s.save()
+
+# Student.objects.create(username="")
+
+# view Data : 
+# Student.objects.all()
+# Stduent.objects.get(id=1)
+
+# ORDERBY : 
+# *****************
+# model.objects.all().order_by('fieldname')
+
+# LIMIT : 
+
+# model.objects.all()[0,0]
+
+
+# FILTER : 
+
+# model.objects.filter(fieldname = '')
+# model.objects.exclue(fieldname = '')
+
+
+# __gte
+# __gt
+# __lte
+# __lt
+# __startwith
+# __endswith
+# __icontains
+# __in
+
+
+# Count()
+# Exists()
+# values()
+# reverse()
+# values_list()
+
+# Aggregation & Annotation function
+
+# model.objects.aggregate(Avg(fieldname))
+
+# Max
+# min
+# sum

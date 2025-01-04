@@ -12,6 +12,41 @@
     <a href="/">Index</a> | <a href="home">Home</a> | <a href="about">About Us</a>
     <h1>Index</h1>
     <h2>Welcome, {{uname}}</h2>
+    <h1 align="center">Student Registration</h1>
+    <h3 align="center">{{msg}}</h3>
+    <table border="1" align="center">
+
+        <form method="post" action="{%url 'addstudent'%}">
+            {%csrf_token%}
+            <tr>
+                <td>Username</td>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input type="text" name="phone"></td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td><input type="text" name="age"></td>
+            </tr>
+
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <input type="submit" name="" id="">
+                </td>
+            </tr>
+        </form>
+    </table>
+
+
 </body>
 
 </html>

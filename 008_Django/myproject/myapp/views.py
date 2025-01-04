@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponse
-
+from myapp.models import *
 # Create your views here.
 def index(request):
     # return HttpResponse("Index calling")
@@ -12,3 +12,15 @@ def home(request):
 def about(request):
     # return HttpResponse("About calling")
     return render(request,"about.html")
+
+def addStudent(request):
+    
+    if request.method=="POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        age = request.POST['age']
+        phone = request.POST['phone']
+
+        Student.objects.create(username=username,email=email,phone=phone,age=age)
+    
+    return render(request,"index.html",{"msg":"Registration successful"})
