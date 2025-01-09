@@ -1,26 +1,36 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,redirect
 from myapp.models import *
 # Create your views here.
 def index(request):
-    # return HttpResponse("Index calling")
-    return render(request,"index.html",{"uname":"Paras"})
+    allusers = MyUser.objects.all()
+   
+    return render(request,"index.html",{"users":allusers})
 
-def home(request):
-    # return HttpResponse("Home calling")
-    return render(request,"home.html")
-
-def about(request):
-    # return HttpResponse("About calling")
-    return render(request,"about.html")
-
-def addStudent(request):
+def adduser(request):
+    if request.method=='POST':
+        id=request.POST['id']
+        uname = request.POST['uname']
+        email= request.POST['email']
+        phone=request.POST['phone']
+        
+        if(id):
+           cuser = MyUser.objects.get(pk=id)
+           cuser.uname=uname
+           cuser.email=email
+           cuser.phone=phone
+           cuser.save()
+        else:
+            createdUser = MyUser.objects.create(uname=uname,email=email,phone=phone)
+        
     
-    if request.method=="POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        age = request.POST['age']
-        phone = request.POST['phone']
+    return redirect("index")
 
-        Student.objects.create(username=username,email=email,phone=phone,age=age)
-    
-    return render(request,"index.html",{"msg":"Registration successful"})
+def deleteuser(request,id):
+    user =  MyUser.objects.get(pk=id)
+    user.delete()
+    return redirect("index")
+
+def edituser(request,id):
+    u =  MyUser.objects.get(pk=id)   
+    allusers = MyUser.objects.all()
+    return render(request,"index.html",{"u":u,"users":allusers})
