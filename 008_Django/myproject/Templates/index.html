@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- <link rel="stylesheet" href={%static "css/style.css" %}> -->
+    <!-- <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/main.js"></script> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
@@ -15,7 +19,7 @@
             <div class="col-5 card mt-3 p-3">
                 <h1 align="center">User Registration</h1>
                 <hr>
-                <form action="{%url 'adduser'%}" method="post">
+                <form action="{%url 'adduser'%}" method="post" enctype="multipart/form-data">
                     {%csrf_token%}
                     <input type="hidden" name="id" value="{{u.id}}">
                     <div class="form-group">
@@ -30,11 +34,38 @@
                         <label for="phone">Phone</label>
                         <input type="text" id="phone" name="phone" class="form-control" value="{{u.phone}}">
                     </div>
+                    <div class="form-group">
+                        <label for="">Gender</label>
+                        <input type="radio" name="gender" value="male" checked>Male
+                        <input type="radio" name="gender" id="" value="female">Female
+                    </div>
+                    <div class="form-group">
+                        <label for="">Languages</label>
+                        <input type="checkbox" name="lng" value="gujarati">Gujarati
+                        <input type="checkbox" name="lng" value="hindi">Hindi
+                        <input type="checkbox" name="lng" value="english">English
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Education</label>
+                        <select name="edu" id="" class="form-control">
+                            <option value="graduate">Graduate</option>
+                            <option value="post-graduate">Post-Graduate</option>
+                            <option value="under-graduate">Under-Graduate</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="img">Image</label>
+                        <input type="file" id="img" name="img" class="form-control">
+                    </div>
                     <input type="submit" class="btn btn-success">
                 </form>
             </div>
 
-            <div class="col-7 card mt-3 p-3">
+            <div class="col-7 card mt-3 p-3 overflow-auto">
                 <h1 align="center">User Details</h1>
                 <hr>
                 <table class="table">
@@ -43,6 +74,10 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Languages</th>
+                        <th>Education</th>
+                        <th>Image</th>
                         <th colspan="2">Action</th>
                     </tr>
                     {%for i in users%}
@@ -51,6 +86,10 @@
                         <td>{{i.uname}}</td>
                         <td>{{i.email}}</td>
                         <td>{{i.phone}}</td>
+                        <td>{{i.gender}}</td>
+                        <td>{{i.lang}}</td>
+                        <td>{{i.education}}</td>
+                        <td><img src="media/{{i.image}}" alt="{{i.image}}" height="50px" width="50px"> </td>
                         <td><a href="{%url 'edituser' i.id%}" class="btn btn-primary">Edit</a></td>
                         <td><a href="{%url 'deleteuser' i.id%}" class="btn btn-danger">Delete</a></td>
                     </tr>

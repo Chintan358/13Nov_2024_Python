@@ -12,7 +12,17 @@ def adduser(request):
         uname = request.POST['uname']
         email= request.POST['email']
         phone=request.POST['phone']
-        
+        gender = request.POST['gender']
+        education = request.POST['edu']
+        lang = request.POST.getlist('lng')
+        image = request.FILES.get("img")
+
+        lng=""
+        for i in lang:
+            lng+=i+","
+
+       
+
         if(id):
            cuser = MyUser.objects.get(pk=id)
            cuser.uname=uname
@@ -20,7 +30,7 @@ def adduser(request):
            cuser.phone=phone
            cuser.save()
         else:
-            createdUser = MyUser.objects.create(uname=uname,email=email,phone=phone)
+          createdUser = MyUser.objects.create(uname=uname,email=email,phone=phone,image=image,gender=gender,lang=lng,education=education)
         
     
     return redirect("index")
