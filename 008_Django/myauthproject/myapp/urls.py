@@ -5,8 +5,10 @@ from myapp.views import *
 
 urlpatterns = [
 
-    path("",userlogin,name="userlogin"),
+    path("",loginpage,name="loginpage"),
     path("reg/",reg,name="reg"),
     path("home/",home,name="home"),
-    path("userreg",userreg,name="userreg")
+    path("userreg",userreg,name="userreg"),
+    path("userlogin",userlogin,name="userlogin"),
+    path("userlogout",userlogout,name="userlogout")
 ]

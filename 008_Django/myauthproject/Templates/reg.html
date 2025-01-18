@@ -18,9 +18,7 @@
                 <h2 align="center">User Registration</h2>
                 <hr>
                 {% if messages %}
-
                 {% for message in messages %}
-
                 {%if "error" in message.tags%}
                 <div class="alert alert-danger" role="alert">
                     {{message}}
@@ -29,12 +27,8 @@
                 <div class="alert alert-success" role="alert">
                     {{message}}
                 </div>
-
                 {%endif%}
-
                 {% endfor %}
-
-
                 {% endif %}
 
 

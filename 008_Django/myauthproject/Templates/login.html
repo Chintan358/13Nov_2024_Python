@@ -17,11 +17,24 @@
             <div class="col-5 mx-auto card p-3 mt-3">
                 <h2 align="center">User Login</h2>
                 <hr>
-                <form action="">
-
+                {% if messages %}
+                {% for message in messages %}
+                {%if "error" in message.tags%}
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+                {%else%}
+                <div class="alert alert-success" role="alert">
+                    {{message}}
+                </div>
+                {%endif%}
+                {% endfor %}
+                {% endif %}
+                <form action="{%url 'userlogin'%}" method="post">
+                    {%csrf_token%}
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email" placeholder="Enter email" class="form-control">
+                        <label for="uname">Username</label>
+                        <input type="text" name="uname" id="uname" placeholder="Enter Username" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="pass">Password</label>
