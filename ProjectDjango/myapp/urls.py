@@ -13,7 +13,8 @@ urlpatterns = [
    path("shop",shop,name="shop"),
    path("shopdetails",shopdetails,name="shopdetails"),
    path("registration",registration,name="registration"),
-   path("login",login,name="login")
+   path("login",loginuser,name="login"),
+   path("logout",userlogout,name="logout")
 
 
 ]

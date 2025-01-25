@@ -10,10 +10,14 @@
     <div class="container">
         <div class="flex-w flex-tr">
             <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md mx-auto">
-                <form>
-                    <h4 class="mtext-105 cl2 txt-center p-b-30">
+
+                <form action="" method="post">
+                    {%csrf_token%}
+                    <h2 class="mtext-105 cl2 txt-center p-b-30">
                         User Registration
-                    </h4>
+                    </h2>
+                    <span class="text-danger">{{err}}</span>
+                    <span class="text-success">{{msg}}</span>
 
                     <div class="bor8 m-b-20 how-pos4-parent">
                         <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="uname"
@@ -39,11 +43,6 @@
 
                     </div>
 
-                    <div class="bor8 m-b-20 how-pos4-parent">
-                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="phone"
-                            placeholder="Your Phone ">
-
-                    </div>
 
 
 
