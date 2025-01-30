@@ -2,10 +2,13 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
+from myapp.models import *
 import re
 # Create your views here.
 def index(request):
-    return render(request,"index.html")
+
+    categories = Category.objects.all()
+    return render(request,"index.html",{"categories":categories})
 
 def about(request):
     return render(request,'about.html')
