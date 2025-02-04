@@ -6,16 +6,31 @@ from myapp.models import *
 import re
 # Create your views here.
 def index(request):
-
     categories = Category.objects.all()
-    return render(request,"index.html",{"categories":categories})
+    products = Product.objects.all()
+    return render(request,"index.html",{"categories":categories,"products":products})
+   
+
+def home(request):
+    id = request.GET.get("id")
+    categories = Category.objects.all()
+    
+    if id=="":
+        products = Product.objects.all()
+    else :
+        ct = Category.objects.get(pk=id)
+        
+        products  =Product.objects.filter(category=ct)
+
+    return render(request,"index.html",{"categories":categories,"products":products})
+
 
 def about(request):
     return render(request,'about.html')
 
 def contact(request):
     return render(request,"contact.html")
-
+    
 @login_required(login_url="login")
 def cart(request):
     return render(request,"shoping-cart.html")

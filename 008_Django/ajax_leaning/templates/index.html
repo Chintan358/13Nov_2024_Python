@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            viewStudent()
+        })
+
+        function viewStudent() {
+
+            var row = "";
+            $.get("viewstudent", {}, function (rt) {
+
+                for (var i in rt.allStudent) {
+                    row = row + "<tr><td>" + rt.allStudent[i].id + "</td><td>" + rt.allStudent[i].username + "</td><td>" + rt.allStudent[i].email + "</td><td>" + rt.allStudent[i].phone + "</td></tr>"
+                }
+                $("#tdata").html(row)
+
+            })
+
+        }
+
+        function addStudent() {
+
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post("addstudent", { csrfmiddlewaretoken, uname, email, phone }, function (rt) {
+                alert(rt)
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                viewStudent()
+            })
+        }
+
+
+    </script>
+
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 card mt-3 p-5">
+                <h2 align="center">User Registration</h2>
+                <hr>
+                {%csrf_token%}
+
+                <div class="form-group">
+                    <label for="uname">Username</label>
+                    <input type="text" id="uname" name="uname" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">email</label>
+                    <input type="text" id="email" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" class="form-control">
+                </div>
+                <button class="btn btn-success" onclick="addStudent()">Submit</button>
+
+
+            </div>
+            <div class="col-1">
+
+            </div>
+            <div class="col-7 card mt-3 p-5">
+                <h2 align="center">User Details</h2>
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tdata">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
