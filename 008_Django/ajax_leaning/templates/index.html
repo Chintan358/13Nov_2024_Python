@@ -14,16 +14,19 @@
     <script>
 
         $(document).ready(function () {
+            $("#upbtn").hide()
             viewStudent()
         })
 
         function viewStudent() {
 
             var row = "";
+            var count = 1
             $.get("viewstudent", {}, function (rt) {
 
                 for (var i in rt.allStudent) {
-                    row = row + "<tr><td>" + rt.allStudent[i].id + "</td><td>" + rt.allStudent[i].username + "</td><td>" + rt.allStudent[i].email + "</td><td>" + rt.allStudent[i].phone + "</td></tr>"
+                    row = row + "<tr><td>" + count + "</td><td>" + rt.allStudent[i].username + "</td><td>" + rt.allStudent[i].email + "</td><td>" + rt.allStudent[i].phone + "</td><td><button onclick='deleteuser(" + rt.allStudent[i].id + ")' class='btn btn-danger'>Delete</button></td><td><button onclick='edituser(" + rt.allStudent[i].id + ")' class='btn btn-primary'>Update</button></td></tr>"
+                    count++;
                 }
                 $("#tdata").html(row)
 
@@ -47,6 +50,62 @@
             })
         }
 
+        function deleteuser(uid) {
+
+            $.get("deleteuser", { uid }, function (rt) {
+                viewStudent()
+
+            })
+        }
+
+        function edituser(uid) {
+            $.get("userbyid", { uid }, function (rt) {
+
+                $("#id").val(rt.st[0].id)
+                $("#uname").val(rt.st[0].username)
+                $("#email").val(rt.st[0].email)
+                $("#phone").val(rt.st[0].phone)
+
+                $("#upbtn").show()
+                $("#smbtn").hide()
+            })
+        }
+
+        function updateuser() {
+
+            var id = $("#id").val()
+            var uname = $("#uname").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+            var csrfmiddlewaretoken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+
+            $.post("updatestudent", { csrfmiddlewaretoken, id, uname, email, phone }, function (rt) {
+                alert(rt)
+                $("#id").val("")
+                $("#uname").val("")
+                $("#email").val("")
+                $("#phone").val("")
+                viewStudent()
+                $("#upbtn").hide()
+                $("#smbtn").show()
+            })
+
+        }
+
+        function search() {
+            var data = $("#search").val()
+            var row = "";
+            var count = 1
+            $.get("searchstudent", { data }, function (rt) {
+
+                for (var i in rt.allStudent) {
+                    row = row + "<tr><td>" + count + "</td><td>" + rt.allStudent[i].username + "</td><td>" + rt.allStudent[i].email + "</td><td>" + rt.allStudent[i].phone + "</td><td><button onclick='deleteuser(" + rt.allStudent[i].id + ")' class='btn btn-danger'>Delete</button></td><td><button onclick='edituser(" + rt.allStudent[i].id + ")' class='btn btn-primary'>Update</button></td></tr>"
+                    count++;
+                }
+                $("#tdata").html(row)
+
+            })
+        }
 
     </script>
 
@@ -61,7 +120,7 @@
                 <h2 align="center">User Registration</h2>
                 <hr>
                 {%csrf_token%}
-
+                <input type="hidden" id="id">
                 <div class="form-group">
                     <label for="uname">Username</label>
                     <input type="text" id="uname" name="uname" class="form-control">
@@ -74,8 +133,8 @@
                     <label for="phone">Phone</label>
                     <input type="text" id="phone" name="phone" class="form-control">
                 </div>
-                <button class="btn btn-success" onclick="addStudent()">Submit</button>
-
+                <button class="btn btn-success" id="smbtn" onclick="addStudent()">Submit</button>
+                <button class="btn btn-success" id="upbtn" onclick="updateuser()">Update</button>
 
             </div>
             <div class="col-1">
@@ -84,6 +143,9 @@
             <div class="col-7 card mt-3 p-5">
                 <h2 align="center">User Details</h2>
                 <hr>
+                <input type="text" name="search" id="search" onkeyup="search()" placeholder="search..."
+                    class="form-control">
+                <hr>
                 <table class="table">
                     <thead>
                         <tr>
@@ -91,6 +153,7 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody id="tdata">
