@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from myapp.models import *
+from django.http import JsonResponse
 import re
 # Create your views here.
 def index(request):
@@ -12,6 +13,7 @@ def index(request):
    
 
 def home(request):
+
     id = request.GET.get("id")
     categories = Category.objects.all()
     
@@ -22,7 +24,8 @@ def home(request):
         
         products  =Product.objects.filter(category=ct)
 
-    return render(request,"index.html",{"categories":categories,"products":products})
+    return JsonResponse({"products":list(products.values())})
+    # return render(request,"index.html",{"categories":categories,"products":products})
 
 
 def about(request):
@@ -39,7 +42,9 @@ def shop(request):
     return render(request,"product.html")
 
 def shopdetails(request):
-    return render(request,"product-detail.html")
+    id  =request.GET['id']
+    pdata =  Product.objects.get(pk=id)
+    return render(request,"product-detail.html",{"pdata":pdata})
 
 def registration(request):
     
@@ -64,6 +69,12 @@ def registration(request):
         return render(request,'registration.html',{"msg" : "Registration successfully !!!"})
 
     return render(request,'registration.html')
+
+def search(request):
+    val = request.GET['val']
+    products  =Product.objects.filter(productName__istartswith=val)
+    return JsonResponse({"products":list(products.values())})
+    
 
 def loginuser(request):
     if request.method=="POST":
