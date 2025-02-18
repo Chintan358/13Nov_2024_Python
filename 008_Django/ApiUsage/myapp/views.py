@@ -17,7 +17,7 @@ def sendsms(request):
     number = random.randint(100,999)
     url = "https://www.fast2sms.com/dev/bulkV2"
 
-    querystring = {"authorization":"WXfAe5cjnlMG0thTkdLD9IsgRyZbS7w41UzP3H8mKiqQNVEova9vDJtywEXpMNoUieOfPlq1r8HhdnTL","variables_values":number,"route":"otp","numbers":phone}
+    querystring = {"authorization":"","variables_values":number,"route":"otp","numbers":phone}
 
     headers = {
         'cache-control': "no-cache"
