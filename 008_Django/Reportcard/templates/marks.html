@@ -18,6 +18,18 @@
 
                 <table class="table">
                     <tr>
+                        <th>Name</th>
+                        <td colspan="2">{{std.firstname}} {{std.lastname}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td colspan="2">{{std.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Age</th>
+                        <td colspan="2">{{std.age}}</td>
+                    </tr>
+                    <tr>
                         <th>Sr.no</th>
                         <th>Subject</th>
                         <th>Marks</th>
@@ -29,6 +41,15 @@
                         <td>{{i.marks}}</td>
                     </tr>
                     {%endfor%}
+                    <tr>
+                        <th colspan="2">Total</th>
+                        <th>{{total.total}}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Rank In Class</th>
+                        <th>{{count}}</th>
+
+                    </tr>
                 </table>
 
             </div>
