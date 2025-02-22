@@ -23,5 +23,7 @@ urlpatterns = [
     path("",index,name="index"),
     path("otp",otp,name="otp"),
     path("sendsms",sendsms,name="sendsms"),
-    path("sendmail",send_mail_page,name="sendmail")
+    path("sendmail",send_mail_page,name="sendmail"),
+    path("payment",payment,name="payment"),
+    path("makepayment",makepayment,name="makepayment")
 ]
