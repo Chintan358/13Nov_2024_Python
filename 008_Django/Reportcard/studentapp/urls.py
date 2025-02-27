@@ -19,5 +19,6 @@ from django.urls import path,include
 from studentapp.views import *
 urlpatterns = [
     path("",index,name="index"),
-    path("marks/<id>",marks,name="marks")
+    path("marks/<id>",marks,name="marks"),
+    path("sendmail/<id>",send_mail_page,name="sendmail")
 ]

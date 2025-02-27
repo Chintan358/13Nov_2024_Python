@@ -29,7 +29,7 @@
                         <td>{{i.firstname}}</td>
                         <td>{{i.lastname}}</td>
                         <td>{{i.age}}</td>
-                        <td>{{i.email}}</td>
+                        <td><a href="{%url 'sendmail' i.student_id.student_id%}">{{i.email}}</a></td>
                         <td>{{i.dept.deptname}}</td>
                     </tr>
                     {%endfor%}
