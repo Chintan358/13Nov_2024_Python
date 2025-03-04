@@ -36,6 +36,7 @@ def contact(request):
     
 @login_required(login_url="login")
 def cart(request):
+    
     return render(request,"shoping-cart.html")
 
 def shop(request):
@@ -48,7 +49,7 @@ def shopdetails(request):
 
 def registration(request):
     
-    pettern = "^[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,4}$"
+    # pettern = "^[a-zA-Z0-9]+@[a-zA-Z]+.[a-zA-Z]{2,4}$"
 
     if request.method=="POST":
         data = request.POST
@@ -56,9 +57,9 @@ def registration(request):
         email = data.get("email")
         password = data.get("password")
 
-        result = re.match(email,pettern)
-        if result == None:
-            return render(request,'registration.html',{"err" : "Invalid Email formate !!!"})
+        # result = re.match(email,pettern)
+        # if result == None:
+        #     return render(request,'registration.html',{"err" : "Invalid Email formate !!!"})
         
         if User.objects.filter(username=username).exists():
              return render(request,'registration.html',{"err" : "User alredy exist !!!"})
@@ -94,3 +95,8 @@ def loginuser(request):
 def userlogout(request):
     logout(request)
     return render(request,'index.html')
+
+@login_required(login_url="login")
+def addtocart(request):
+    pid = request.GET['pid']
+    print(pid,request.user.id)
