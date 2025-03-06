@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
@@ -37,7 +37,13 @@ def contact(request):
 @login_required(login_url="login")
 def cart(request):
     
-    return render(request,"shoping-cart.html")
+    cartdata = Cart.objects.filter(user=request.user)
+    total = 0
+    for i in cartdata:
+         total+=i.total_price()
+
+    
+    return render(request,"shoping-cart.html",{"cartdata":cartdata,"total":total})
 
 def shop(request):
     return render(request,"product.html")
@@ -96,7 +102,27 @@ def userlogout(request):
     logout(request)
     return render(request,'index.html')
 
-@login_required(login_url="login")
+
 def addtocart(request):
-    pid = request.GET['pid']
-    print(pid,request.user.id)
+
+    if request.user.is_anonymous:
+      return HttpResponse(request.user)
+    else:
+        
+        pid = request.GET['pid']
+        qty = int(request.GET['qty'])
+        product = Product.objects.get(pk=pid)
+
+        cartdata =  Cart.objects.filter(user=request.user,product=product)
+        if cartdata:
+            aqty = cartdata[0].qty
+            qty+=aqty
+            cartdata[0].qty = qty
+            cartdata[0].save()
+        else:
+            Cart.objects.create(user=request.user,product=product,qty=qty)
+        
+      
+        return HttpResponse("Product added into cart !!!")
+    
+   

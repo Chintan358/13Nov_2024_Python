@@ -3,8 +3,16 @@
 <script>
 	const addtocart = (pid)=>{
 		
-		$.get("addtocart",{pid},function(rt){
-			alert(rt)
+		qty = document.getElementById("qty").value
+		$.get("addtocart",{pid,qty},function(rt){
+			if(rt=="AnonymousUser")
+			{
+				window.location.href="/login"
+			}
+			else
+			{
+				alert(rt)
+			}
 		})
 
 	}
@@ -143,7 +151,7 @@
 										<i class="fs-16 zmdi zmdi-minus"></i>
 									</div>
 
-									<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product"
+									<input class="mtext-104 cl3 txt-center num-product" type="number" id="qty" name="num-product"
 										value="1">
 
 									<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
