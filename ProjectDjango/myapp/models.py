@@ -26,3 +26,6 @@ class Cart(models.Model):
     def total_price(self):
         return self.qty*self.product.price
     
+class Address(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    address=models.TextField(max_length=500)

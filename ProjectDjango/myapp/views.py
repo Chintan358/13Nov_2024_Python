@@ -38,12 +38,13 @@ def contact(request):
 def cart(request):
     
     cartdata = Cart.objects.filter(user=request.user)
+    addressdata=Address.objects.filter(user=request.user)
     total = 0
     for i in cartdata:
          total+=i.total_price()
 
     
-    return render(request,"shoping-cart.html",{"cartdata":cartdata,"total":total})
+    return render(request,"shoping-cart.html",{"cartdata":cartdata,"total":total,"addressdata":addressdata})
 
 def shop(request):
     return render(request,"product.html")
@@ -124,5 +125,14 @@ def addtocart(request):
         
       
         return HttpResponse("Product added into cart !!!")
+
+def changeQty(request):
+    data = request.GET
+    qty = int(data.get("qty"))
+    cid = int(data.get("cid"))
     
+    cart =  Cart.objects.get(pk=cid)
+    cart.qty =  cart.qty+qty
+    cart.save()
    
+    return HttpResponse("Qty Changed")
