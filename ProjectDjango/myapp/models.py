@@ -29,3 +29,15 @@ class Cart(models.Model):
 class Address(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     address=models.TextField(max_length=500)
+
+class Order(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    payid = models.CharField(max_length=20)
+    date = models.DateField(auto_now_add=True)
+    paytype=models.CharField(max_length=50)
+
+class OrderItems(models.Model):
+    order = models.ForeignKey(Order,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    price = models.FloatField()
+    qty = models.IntegerField()

@@ -129,12 +129,12 @@
 
 						<div class="size-209 p-t-1">
 							<span class="mtext-110 cl2">
-								${{total}}
+								$ <span id="amt">{{total}}</span>
 							</span>
 						</div>
 					</div>
 
-					<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+					<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" id="pay">
 						Proceed to Checkout
 					</button>
 				</div>
@@ -314,4 +314,68 @@
 
 	}
 </script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+document.getElementById('pay').onclick = function(e){
+
+	
+    e.preventDefault();
+    var amt = document.getElementById("amt").innerHTML
+	
+    $.get('payment',{amt},function(rt){
+        
+    var options = {
+    "key": "rzp_test_pv6FbtEGoD0n4P", // Enter the Key ID generated from the Dashboard
+    "amount": rt.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Tops Tech",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": rt.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+
+        {% comment %} alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature) {% endcomment %}
+
+
+		$.get("makeorder",{"payid":response.razorpay_payment_id},function(rt){
+			alert(rt)
+		})
+
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+
+
+rzp1.open();
+    })
+
+    
+  
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
 {%endblock%}

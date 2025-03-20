@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from myapp.models import *
 from django.http import JsonResponse
 import re
+import razorpay
+from django.http import JsonResponse
 # Create your views here.
 def index(request):
     categories = Category.objects.all()
@@ -136,3 +138,29 @@ def changeQty(request):
     cart.save()
    
     return HttpResponse("Qty Changed")
+
+def payment(request):
+    amt = request.GET['amt']
+   
+    
+    client = razorpay.Client(auth=("rzp_test_pv6FbtEGoD0n4P", "iladq0iIJ4h3mt2LyxAalTuK"))
+
+    data = { "amount": int(amt)*100, "currency": "INR", "receipt": "order_rcptid_11" }
+    payment = client.order.create(data=data) 
+    return JsonResponse(payment)
+
+def makeorder(request):
+       payid = request.GET['payid']
+
+
+       order = Order.objects.create(user=request.user,payid=payid,paytype="online")
+
+       carts = Cart.objects.filter(user=request.user)
+       for i in carts:
+           OrderItems.objects.create(order=order,product=i.product,price=i.product.price,qty=i.qty)
+           i.delete()
+
+        
+
+       return HttpResponse("Order Confirm !!!")
+    
