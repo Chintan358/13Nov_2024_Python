@@ -7,7 +7,8 @@ from rest_framework.authtoken.models import Token
 # Create your views here.
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework import generics
 @api_view(["post"])
 def registerUser(request):
     data = UserSerializer(data=request.data)
@@ -20,7 +21,8 @@ def registerUser(request):
 
 class CategoryAPI(APIView):
 
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    # authentication_classes = [SessionAuthentication, TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
 
@@ -68,3 +70,8 @@ class ProductApI(APIView):
             return Response({"status":"202","Errors":data.errors,"message":"something went wrong"})
         data.save()
         return Response({"message":"Data Inserted","data":data.data})
+    
+
+class CategoryGenrice(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class=CategorySerializer
