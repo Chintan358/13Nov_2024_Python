@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+
+            $(document).ready(function(){
+                
+                    $.get("countries",{},(rt)=>{
+                        
+                        var rows="<option>---select country---</option>"
+                        rt.data.map(ele=>{
+
+                            rows+="<option value="+ele.id+">"+ele.name+"</option>"
+
+
+                        })
+                        $("#country").html(rows)
+                    })
+
+            })
+
+            const getStates = (cid)=>{
+                
+                $.get("states",{cid},(rt)=>{
+                        
+                        var rows="<option>---select state---</option>"
+                        rt.data.map(ele=>{
+
+                            rows+="<option value="+ele.id+">"+ele.name+"</option>"
+
+
+                        })
+                        $("#state").html(rows)
+                    })
+
+            }
+
+            const getCities = (sid)=>{
+                
+                $.get("cities",{sid},(rt)=>{
+                        
+                        var rows="<option>---select city---</option>"
+                        rt.data.map(ele=>{
+
+                            rows+="<option value="+ele.id+">"+ele.name+"</option>"
+
+
+                        })
+                        $("#city").html(rows)
+                    })
+
+            }
+
+
+
+
+    </script>
+
+
+</head>
+<body>
+    <h1>Welcome</h1>
+
+    <input type="text" name="" id="">
+    <br><br>
+    <select name="country" id="country" onchange="getStates(value)">
+        <option value="0">---select country---</option>
+    </select>
+
+    <br><br>
+
+    <select name="state" id="state"onchange="getCities(value)">
+        <option value="0">---select state---</option>
+    </select>
+
+
+    <br>
+    <br>
+
+    <select name="city" id="city">
+        <option value="0">---select city---</option>
+    </select>
+
+</body>
+</html>
